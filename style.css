@@ -960,3 +960,14 @@ height:300px;
 }
 
 }
+nav a.active{
+
+color:#4CAF50;
+
+}
+
+nav a.active::after{
+
+width:100%;
+
+}
