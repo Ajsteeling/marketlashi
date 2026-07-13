@@ -2,55 +2,27 @@
 // LANGUAGE SWITCH
 // ==========================
 
-function changeLanguage(language){
+function changeLanguage(lang) {
 
-const elements=document.querySelectorAll(".lang");
+    document.documentElement.lang = lang;
 
-elements.forEach(function(element){
+    const elements = document.querySelectorAll(".lang");
 
-if(language==="sq"){
+    elements.forEach(function (element) {
 
-element.innerHTML=element.getAttribute("data-sq");
+        if (lang === "sq") {
 
-}
+            element.textContent = element.dataset.sq;
 
-else{
+        } else {
 
-element.innerHTML=element.getAttribute("data-en");
+            element.textContent = element.dataset.en;
 
-}
+        }
 
-});
-
-}
-
-
-
-// ==========================
-// HEADER SCROLL
-// ==========================
-
-window.addEventListener("scroll",function(){
-
-const header=document.getElementById("header");
-
-if(window.scrollY>50){
-
-header.style.background="#ffffff";
-
-header.style.boxShadow="0 8px 20px rgba(0,0,0,.15)";
+    });
 
 }
-
-else{
-
-header.style.background="rgba(255,255,255,.95)";
-
-header.style.boxShadow="0 5px 15px rgba(0,0,0,.08)";
-
-}
-
-});
 
 
 
@@ -58,46 +30,88 @@ header.style.boxShadow="0 5px 15px rgba(0,0,0,.08)";
 // MOBILE MENU
 // ==========================
 
-const menu=document.querySelector(".menu");
+const menu = document.querySelector(".menu");
+const nav = document.querySelector("nav");
 
-const nav=document.querySelector("nav");
+menu.addEventListener("click", function () {
 
-menu.addEventListener("click",function(){
+    nav.classList.toggle("show");
 
-nav.classList.toggle("show");
+});
+
+
+
+// Mbyll menunë pasi klikohet një link
+
+document.querySelectorAll("nav a").forEach(function(link){
+
+    link.addEventListener("click",function(){
+
+        nav.classList.remove("show");
+
+    });
 
 });
 
 
 
 // ==========================
-// SCROLL ANIMATION
+// HEADER EFFECT
 // ==========================
 
-const observer=new IntersectionObserver(function(entries){
+window.addEventListener("scroll", function () {
 
-entries.forEach(function(entry){
+    const header = document.getElementById("header");
 
-if(entry.isIntersecting){
+    if (window.scrollY > 60) {
 
-entry.target.style.opacity="1";
+        header.style.background = "#ffffff";
+        header.style.boxShadow = "0 8px 20px rgba(0,0,0,.12)";
 
-entry.target.style.transform="translateY(0px)";
+    } else {
 
-}
+        header.style.background = "rgba(255,255,255,.96)";
+        header.style.boxShadow = "0 5px 15px rgba(0,0,0,.08)";
+
+    }
 
 });
 
-});
 
-document.querySelectorAll(".card,.why-box,.gallery-grid img,.about-image,.about-text").forEach(function(item){
 
-item.style.opacity="0";
+// ==========================
+// ACTIVE MENU
+// ==========================
 
-item.style.transform="translateY(40px)";
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll("nav a");
 
-item.style.transition="all .7s ease";
+window.addEventListener("scroll", () => {
 
-observer.observe(item);
+    let current = "";
+
+    sections.forEach(section => {
+
+        const sectionTop = section.offsetTop - 120;
+
+        if (pageYOffset >= sectionTop) {
+
+            current = section.getAttribute("id");
+
+        }
+
+    });
+
+    navLinks.forEach(link => {
+
+        link.classList.remove("active");
+
+        if (link.getAttribute("href") === "#" + current) {
+
+            link.classList.add("active");
+
+        }
+
+    });
 
 });
